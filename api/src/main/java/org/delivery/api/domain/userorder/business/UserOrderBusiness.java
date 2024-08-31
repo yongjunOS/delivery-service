@@ -1,7 +1,10 @@
 package org.delivery.api.domain.userorder.business;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.delivery.api.common.annotation.Business;
+import org.delivery.api.common.error.ErrorCode;
+import org.delivery.api.common.exception.ApiException;
 import org.delivery.api.domain.store.converter.StoreConverter;
 import org.delivery.api.domain.store.service.StoreService;
 import org.delivery.api.domain.storemenu.converter.StoreMenuConverter;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Business
+@Slf4j
 public class UserOrderBusiness {
 
     private final UserOrderService userOrderService;
@@ -42,37 +46,55 @@ public class UserOrderBusiness {
     // 2. userOrder 생성
     // 3. userOrderMenu 생성
     // 4. 응답 생성
+
     public UserOrderResponse userOrder(User user, UserOrderRequest body) {
-        var storeMenuEntityList = body.getStoreMenuIdList()
-            .stream()
-            .map(it -> storeMenuService.getStoreMenuWithThrow(it))
-            .collect(Collectors.toList());
+        log.info("Received order request for user {}: {}", user.getId(), body);
 
-        var userOrderEntity = userOrderConverter.toEntity(user, body.getStoreId(), storeMenuEntityList);
+        if (body == null || body.getStoreMenuIdList() == null || body.getStoreMenuIdList().isEmpty()) {
+            log.error("Invalid order request: body or storeMenuIdList is null or empty");
+            throw new ApiException(ErrorCode.BAD_REQUEST, "Invalid order request");
+        }
 
-        // 주문
-        var newUserOrderEntity = userOrderService.order(userOrderEntity);
+        if (body.getStoreId() == null) {
+            log.error("Invalid order request: storeId is null");
+            throw new ApiException(ErrorCode.BAD_REQUEST, "Store ID is required");
+        }
 
-        // 맵핑
-        var userOrderMenuEntityList = storeMenuEntityList.stream()
-            .map(it ->{
-                // menu +user order
-                var userOrderMenuEntity = userOrderMenuConverter.toEntity(newUserOrderEntity, it);
-                return userOrderMenuEntity;
-            })
-            .collect(Collectors.toList());
+        try {
+            var storeMenuEntityList = body.getStoreMenuIdList()
+                    .stream()
+                    .map(it -> {
+                        try {
+                            return storeMenuService.getStoreMenuWithThrow(it);
+                        } catch (Exception e) {
+                            log.error("Error fetching store menu with id {}: {}", it, e.getMessage());
+                            throw new ApiException(ErrorCode.NOT_FOUND, "Store menu not found: " + it);
+                        }
+                    })
+                    .collect(Collectors.toList());
 
-        // 주문내역 기록 남기기
-        userOrderMenuEntityList.forEach(it ->{
-            userOrderMenuService.order(it);
-        });
+            var userOrderEntity = userOrderConverter.toEntity(user, body.getStoreId(), storeMenuEntityList);
 
+            // 주문
+            var newUserOrderEntity = userOrderService.order(userOrderEntity);
 
+            // 맵핑
+            var userOrderMenuEntityList = storeMenuEntityList.stream()
+                    .map(it -> userOrderMenuConverter.toEntity(newUserOrderEntity, it))
+                    .collect(Collectors.toList());
 
-        // response
-        return userOrderConverter.toResponse(newUserOrderEntity);
+            // 주문내역 기록 남기기
+            userOrderMenuEntityList.forEach(userOrderMenuService::order);
+
+            // response
+            var response = userOrderConverter.toResponse(newUserOrderEntity);
+            log.info("Order processed successfully for user {}: {}", user.getId(), response);
+            return response;
+        } catch (Exception e) {
+            log.error("Error processing order for user {}: {}", user.getId(), e.getMessage());
+            throw new ApiException(ErrorCode.INTERNAL_SERVER_ERROR, "Error processing order: " + e.getMessage());
+        }
     }
-
     public List<UserOrderDetailResponse> current(User user) {
 
         var userOrderEntityList =  userOrderService.current(user.getId());
