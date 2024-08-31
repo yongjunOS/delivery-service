@@ -20,10 +20,10 @@ public class TokenConverter {
             TokenDto refreshToken
     ) {
         Objects.requireNonNull(accessToken, () -> {
-            throw new ApiException(ErrorCode.NULL_POINT);
+            throw new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR);
         });
         Objects.requireNonNull(refreshToken, () -> {
-            throw new ApiException(ErrorCode.NULL_POINT);
+            throw new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR);
         });
 
         return TokenResponse.builder()

@@ -29,7 +29,7 @@ public class UserService {
                     userEntity.setRegisteredAt(LocalDateTime.now());
                     return userRepository.save(userEntity);
                 })
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "User Entity Null"));
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR, "User Entity Null"));
     }
 
     public UserEntity login(

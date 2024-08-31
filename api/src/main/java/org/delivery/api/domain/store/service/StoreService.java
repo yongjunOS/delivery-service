@@ -22,7 +22,7 @@ public class StoreService {
     // 유효한 스토어 가져오기
     public StoreEntity getStoreWithThrow(Long id) {
         var entity = storeRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoreStatus.REGISTERED);
-        return entity.orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+        return entity.orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND));
     }
 
     // 스토어 등록
@@ -36,7 +36,7 @@ public class StoreService {
 
                     return storeRepository.save(it);
                 })
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
 

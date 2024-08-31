@@ -29,7 +29,7 @@ public class StoreMenuConverter {
                             ;
 
                 })
-                .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT));
+                .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
 
@@ -50,7 +50,7 @@ public class StoreMenuConverter {
                             .build()
                             ;
                 })
-                .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT));
+                .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
     public List<StoreMenuResponse> toResponse(

@@ -37,7 +37,7 @@ public class TokenService {
 
         var userId = map.get("userId");
         Objects.requireNonNull(userId, () -> {
-            throw new ApiException(ErrorCode.NULL_POINT);
+            throw new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR);
         });
 
         return Long.parseLong(userId.toString());

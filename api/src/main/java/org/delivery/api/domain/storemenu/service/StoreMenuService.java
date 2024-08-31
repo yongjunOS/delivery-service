@@ -20,7 +20,7 @@ public class StoreMenuService {
 
     public StoreMenuEntity getStoreMenuWithThrow(Long id) {
         var entity = storeMenuRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoreMenuStatus.REGISTERED);
-        return entity.orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+        return entity.orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
     public List<StoreMenuEntity> getStoreMenuByStoreId(Long storeId) {
@@ -36,7 +36,7 @@ public class StoreMenuService {
                     it.setStatus(StoreMenuStatus.REGISTERED);
                     return storeMenuRepository.save(it);
                 })
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
 
     }
 

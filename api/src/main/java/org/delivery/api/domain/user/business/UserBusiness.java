@@ -38,7 +38,7 @@ public class UserBusiness {
                 .map(userConverter::toEntity)
                 .map(userService::register)
                 .map(userConverter::toResponse)
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "request null"));*/
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR, "request null"));*/
     }
 
 

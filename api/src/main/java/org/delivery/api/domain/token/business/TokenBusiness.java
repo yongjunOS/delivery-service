@@ -36,7 +36,7 @@ public class TokenBusiness {
                     return tokenConverter.toResponse(accessToken, refreshToken);
                 })
                 .orElseThrow(
-                        () -> new ApiException(ErrorCode.NULL_POINT)
+                        () -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR)
                 );
     }
 

@@ -23,7 +23,7 @@ public enum ErrorCode implements ErrorCodeIfs {
     SERVICE_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE.value(), 503, "서비스 사용 불가"),
 
     // 커스텀 오류
-    NULL_POINT_ERROR(520, 520, "Null Pointer 오류"),
+    NULL_POINT_ERROR_ERROR(520, 520, "Null Pointer 오류"),
     TOKEN_EXPIRE(521, 521, "토큰 만료"),
     INVALID_TOKEN(522, 522, "유효하지 않은 토큰"),
 

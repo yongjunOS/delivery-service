@@ -28,7 +28,7 @@ public class StoreConverter {
                             .build()
                             ;
                 })
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
     public StoreResponse toResponse(
@@ -49,7 +49,7 @@ public class StoreConverter {
                             .star(entity.getStar())
                             .build();
                 })
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
 }

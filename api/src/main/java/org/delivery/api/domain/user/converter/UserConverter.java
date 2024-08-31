@@ -27,7 +27,7 @@ public class UserConverter {
                             .address(request.getAddress())
                             .build();
                 })
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserRegisterRequest Null"));
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR, "UserRegisterRequest Null"));
 
     }
 
@@ -47,6 +47,6 @@ public class UserConverter {
                     .lastLoginAt(userEntity.getLastLoginAt())
                     .build();
         })
-        .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserEntity Null"));
+        .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR, "UserEntity Null"));
     }
 }

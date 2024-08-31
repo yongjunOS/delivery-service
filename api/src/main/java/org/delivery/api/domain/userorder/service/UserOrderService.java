@@ -23,7 +23,7 @@ public class UserOrderService {
         Long userId
     ){
         return userOrderRepository.findAllByIdAndUserId(id, userId)
-            .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT));
+            .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
     public UserOrderEntity getUserOrderWithThrow(
@@ -31,7 +31,7 @@ public class UserOrderService {
         Long userId
     ){
         return userOrderRepository.findAllByIdAndStatusAndUserId(id, UserOrderStatus.REGISTERED, userId)
-            .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT));
+            .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
     public List<UserOrderEntity> getUserOrderList(Long userId){
@@ -77,7 +77,7 @@ public class UserOrderService {
                 it.setOrderedAt(LocalDateTime.now());
                 return userOrderRepository.save(it);
             })
-            .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+            .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT_ERROR_ERROR));
     }
 
     // 상태 변경
