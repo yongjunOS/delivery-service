@@ -35,3 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
+git remote -v
+git remote -v.pub
