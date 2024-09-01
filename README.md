@@ -13,6 +13,7 @@
 
 ---
 
-## 전체 ERD 로직
-![Untitled diagram-2024-08-31-061130](https://github.com/user-attachments/assets/10ba8741-e513-4c62-a604-dca86ebec568)
+##  ERD 
+![Delivery Service](https://github.com/user-attachments/assets/422b68cb-6951-4518-8dc0-0974d3180c86)
+
 
