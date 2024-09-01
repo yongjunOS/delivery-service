@@ -13,35 +13,35 @@ import java.util.List;
 public class UserOrderConverter {
 
     public UserOrderEntity toEntity(
-        User user,
-        Long storeId,
-        List<StoreMenuEntity> storeMenuEntityList
+            User user,
+            Long storeId,
+            List<StoreMenuEntity> storeMenuEntityList
     ){
         var totalAmount = storeMenuEntityList.stream()
-            .map(it -> it.getAmount())
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(it -> it.getAmount())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return UserOrderEntity.builder()
-            .userId(user.getId())
-            .storeId(storeId)
-            .amount(totalAmount)
-            .build()
-            ;
+                .userId(user.getId())
+                .storeId(storeId)
+                .amount(totalAmount)
+                .build()
+                ;
     }
 
     public UserOrderResponse toResponse(
-        UserOrderEntity userOrderEntity
+            UserOrderEntity userOrderEntity
     ){
         return UserOrderResponse.builder()
-            .id(userOrderEntity.getId())
-            .status(userOrderEntity.getStatus())
-            .amount(userOrderEntity.getAmount())
-            .orderedAt(userOrderEntity.getOrderedAt())
-            .acceptedAt(userOrderEntity.getAcceptedAt())
-            .cookingStartedAt(userOrderEntity.getCookingStartedAt())
-            .deliveryStartedAt(userOrderEntity.getDeliveryStartedAt())
-            .receivedAt(userOrderEntity.getReceivedAt())
-            .build()
-            ;
+                .id(userOrderEntity.getId())
+                .status(userOrderEntity.getStatus())
+                .amount(userOrderEntity.getAmount())
+                .orderedAt(userOrderEntity.getOrderedAt())
+                .acceptedAt(userOrderEntity.getAcceptedAt())
+                .cookingStartedAt(userOrderEntity.getCookingStartedAt())
+                .deliveryStartedAt(userOrderEntity.getDeliveryStartedAt())
+                .receivedAt(userOrderEntity.getReceivedAt())
+                .build()
+                ;
     }
 }

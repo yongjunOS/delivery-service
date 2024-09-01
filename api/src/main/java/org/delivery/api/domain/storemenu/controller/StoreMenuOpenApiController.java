@@ -25,7 +25,10 @@ public class StoreMenuOpenApiController {
             @Valid
             @RequestBody Api<StoreMenuRegisterRequest> request
     ) {
+
         var req = request.getBody();
+        System.out.println("storeId: " + req.getStoreId());  // storeId 값 출력
+        System.out.println("name:" + req.getName());  // name 값 출력
         var response = storeMenuBusiness.register(req);
         return Api.OK(response);
     }

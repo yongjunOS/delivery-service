@@ -23,6 +23,11 @@ public class StoreMenuBusiness {
     public StoreMenuResponse register(
             StoreMenuRegisterRequest request
     ){
+        // 요청 객체의 값을 확인
+        System.out.println("Request - storeId: " + request.getStoreId());
+        System.out.println("Request - name: " + request.getName());
+        System.out.println("Request - amount: " + request.getAmount());
+        System.out.println("Request - thumbnailUrl: " + request.getThumbnailUrl());
         // req -> entity -> save -> response
         var entity = storeMenuConverter.toEntity(request);
         var newEntity = storeMenuService.register(entity);
